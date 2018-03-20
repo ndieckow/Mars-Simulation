@@ -18,8 +18,8 @@ public class SimulationPanel extends JPanel {
 	private HorizontalBar energyProductionBar;
 	private HorizontalBar energyUsageBar;
 	
-	private HorizontalBar populationBar;
 	private HorizontalBar areaBar;
+	private HorizontalBar populationBar;
 	
 	private VerticalBar erzBar;
 	private VerticalBar alumBar;
@@ -41,13 +41,13 @@ public class SimulationPanel extends JPanel {
 		energyUsageBar.setFill((float) Math.random() * 100);
 		bars.add(energyUsageBar);
 		
-		populationBar = new HorizontalBar(50, hbs + 120, 900, 20, 100);
-		populationBar.setFill((float) Math.random() * 100);
-		bars.add(populationBar);
-		
-		areaBar = new HorizontalBar(50, hbs + 180, 900, 20, 100);
+		areaBar = new HorizontalBar(50, hbs + 120, 900, 20, 100);
 		areaBar.setFill((float) Math.random() * 100);
 		bars.add(areaBar);
+		
+		populationBar = new HorizontalBar(50, hbs + 180, 900, 20, 100);
+		populationBar.setFill((float) Math.random() * 100);
+		bars.add(populationBar);
 		
 		// Instantiate vertical bars
 		erzBar = new VerticalBar(1050, 30, 30, 600, 100);
@@ -60,6 +60,9 @@ public class SimulationPanel extends JPanel {
 	}
 	
 	public void update() {
+		// BERECHNUNGEN
+		
+		
 		for (Bar b : bars) {
 			b.update();
 			b.setFill(b.getFill() + 0.2f);
