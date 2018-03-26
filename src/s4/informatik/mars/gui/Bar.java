@@ -10,6 +10,7 @@ public abstract class Bar {
 	protected int width, height;
 	protected float max;
 	protected float fill;
+	protected float changeRate;
 	
 	private boolean changingMax = false;
 	private int temp_newMax = 0;
@@ -24,7 +25,7 @@ public abstract class Bar {
 		this.width = width;
 		this.height = height;
 		this.max = max;
-		fill = max;
+		fill = 0;
 	}
 	
 	public float getFill() {
@@ -44,6 +45,14 @@ public abstract class Bar {
 	
 	public float getMax() {
 		return max;
+	}
+	
+	public float getChangeRate() {
+		return changeRate;
+	}
+	
+	public void setChangeRate(float changeRate) {
+		this.changeRate = changeRate;
 	}
 	
 	public void changeMaxSmoothly(int newMax, int ticks) {
@@ -72,7 +81,8 @@ public abstract class Bar {
 			}
 		}
 		
-		if (fill >= max && !changingMax) changeMaxSmoothly((int) max * 2, 100);
+		fill += changeRate;
+		if (fill >= max && !changingMax) changeMaxSmoothly((int) max * 4, 60);		
 	}
 	
 	public abstract void render(Graphics g);

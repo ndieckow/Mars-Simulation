@@ -3,43 +3,41 @@ package s4.informatik.mars;
 public class Colony {
 
 	// constants
-	public static int CALC_INTERVAL = 1; // beim wievielten Tick jeweils sollte calculate() ausgef�hrt werden?
+	public static int CALC_INTERVAL = 120; // beim wievielten Tick jeweils sollte calculate() ausgeführt werden?
 
-	public static float POPULATION_GROWTH = 1; // m
-	public static int AREA_CONSTANT = 1; // m // wieviele Personen pro Haus leben
-	public static float GENERATOR_GROWTH = 1; // m // wieviele Generatoren pro Zeiteinheit hinzukommen
+	public static float POPULATION_GROWTH = 0.2f; // m
+	public static int AREA_CONSTANT = 10; // m // wieviele Personen pro Haus leben
+	public static float GENERATOR_GROWTH = 0.2f; // m // wieviele Generatoren pro Zeiteinheit hinzukommen
 	public static float ENERGY_PROD_CONSTANT = 2; // m // wieviel Energie jeder Generator produziert
-	public static float EFFICIENCY = 0.9; // m // wieviel Alu aus einem Erz gewonnen wird
+	public static float EFFICIENCY = 0.9f; // m // wieviel Alu aus einem Erz gewonnen wird
+	public static float EPP; // m // energy usage per person
+	public static float MINING_MOD; // m // Modifikator, der beeinflusst wieviel Erz erzeugt wird
+	public static float SMELTING_MOD; // m // Modifikator, der beeinflusst wie schnell Erz zu Aluminium wird
+	public static float MINING_PERCENTAGE; // m // wieviel % der Restenergie in den Bergbau fließt
+	public static float MINING_PERCENTAGE_POP; // m // welcher Anteil der Bevölkerung im Bergbau arbeitet
+	public static float HOUSE_PRICE; // m // wieviel Aluminium ein Haus benötigt
 
 	public int houses; // m
-	public int area; // wieviel Personen in der Kolonie leben können
-	public int population;
+	public int capacity; // wieviel Personen in der Kolonie leben können
+	public int OLD_capacity;
+	public int population; // m
+	public int OLD_population;
 	public int generators; // m
 
 	public float energyProduction;
-	public float energyUsagePerPerson; // m
+	public float OLD_energyProduction;
 	public float energyUsage;
+	public float OLD_energyUsage;
 
 	public float ore;
+	public float OLD_ore;
 	public float aluminium;
-	public float miningMod; // m // Modifikator, der beeinflusst wieviel Erz erzeugt wird
-	public float smeltingMod; // m // Modifikator, der beeinflusst wie schnell Erz zu Aluminium wird
+	public float OLD_aluminium;
 
-	public float miningPercentage; // m // wieviel % der Restenergie in den Bergbau fließt
-	public float miningPercentagePop; // m // welcher Anteil der Bevölkerung im Bergbau arbeitet
-
-	public float housePrice; // m // wieviel Aluminium ein Haus benötigt
-
-	public Colony(int people, int houses, int generators, float energyUsagePerPerson, float miningMod, float smeltingMod, float miningPercentage, float miningPercentagePop, float housePrice) {
-		population = people; // m
+	public Colony(int people, int houses, int generators) {
+		population = people;
 		this.houses = houses;
 		this.generators = generators;
-		this.energyUsagePerPerson = energyUsagePerPerson;
-		this.miningMod = miningMod;
-		this.smeltingMod = smeltingMod;
-		this.miningPercentage = miningPercentage;
-		this.miningPercentagePop = miningPercentagePop;
-		this.housePrice = housePrice;
 	}
 
 	/**
@@ -47,19 +45,47 @@ public class Colony {
 	 * Entspricht einer Zeitspanne von einem Monat.
 	 */
 	public void calculate() {
+		// set OLD variables
+		OLD_population = population;
+		OLD_capacity = capacity;
+		OLD_energyProduction = energyProduction;
+		OLD_energyUsage = energyUsage;
+		OLD_ore = ore;
+		OLD_aluminium = aluminium;
+		
 		population += population * POPULATION_GROWTH;
-		area = houses * AREA_CONSTANT;
+		generators += generators * GENERATOR_GROWTH;
+		capacity = houses * AREA_CONSTANT;
 		energyProduction = generators * ENERGY_PROD_CONSTANT;
-		energyUsage = population * energyUsagePerPerson;
+		energyUsage = population * EPP;
+		
+		/*if (energyProduction - capacity * energyUsagePerPerson < 0) {
+			population = (int) (energyProduction / energyUsagePerPerson);
+		}*/
 
 		float energyRest = energyProduction - energyUsage;
-		float energyMining = energyRest * miningPercentage;
-		float energySmelting = energyRest * (1 - miningPercentage);
-		float miningFactor = energyMining * (population * miningPercentagePop);
-		float oreProd = miningFactor * miningMod;
-		float smeltingFactor = energySmelting * (population * (1 - miningPercentagePop));
-		float oreUsage = smeltingFactor * smeltingMod;
+		float energyMining = energyRest * MINING_PERCENTAGE;
+		float energySmelting = energyRest * (1 - MINING_PERCENTAGE);
+		float miningFactor = energyMining * (population * MINING_PERCENTAGE_POP);
+		float oreProd = miningFactor * MINING_MOD;
+		float smeltingFactor = energySmelting * (population * (1 - MINING_PERCENTAGE_POP));
+		float oreUsage = smeltingFactor * SMELTING_MOD;
 
 		aluminium = oreUsage * EFFICIENCY;
+		
+		// evtl. Häuserzahl erhöhen
+		while (aluminium >= HOUSE_PRICE) {
+			houses++;
+			aluminium -= HOUSE_PRICE;
+		}
+		
+		System.out.println("=========================");
+		System.out.println("Population: " + population);
+		System.out.println("Haeuser: " + houses);
+		System.out.println("Bevoelkerungskap.: " + capacity);
+		System.out.println("Energieproduktion: " + energyProduction);
+		System.out.println("Energienutzung: " + energyUsage);
+		System.out.println("Energierest: " + energyRest);
+		System.out.println("Aluminium: " + aluminium);
 	}
 }

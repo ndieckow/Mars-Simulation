@@ -12,13 +12,13 @@ public class Simulation implements Runnable {
 	private JFrame frame;
 	private SimulationPanel sPanel;
 	
-	public Simulation() {
+	public Simulation(int people, int houses, int generators) {
 		frame = new JFrame("Mars Simulation");
 		Insets insets = frame.getInsets();
 		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		sPanel = new SimulationPanel();
+		sPanel = new SimulationPanel(people, houses, generators);
 		frame.add(sPanel);
 		
 		frame.setSize(1280 + insets.left + insets.right, 720 + insets.top + insets.bottom);
@@ -78,7 +78,7 @@ public class Simulation implements Runnable {
 			
 			if (System.currentTimeMillis() - lastTimer > 1000) {
 				lastTimer += 1000;
-				System.out.println(ticks + " ticks, " + frames + " fps");
+				//System.out.println(ticks + " ticks, " + frames + " fps");
 				ticks = 0;
 				frames = 0;
 			}

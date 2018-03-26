@@ -6,13 +6,14 @@ import java.awt.Graphics;
 
 public class VerticalBar extends Bar {
 	
-	public VerticalBar(int x, int y, int width, int height, int max) {
+	public VerticalBar(int x, int y, int width, int height, float max) {
 		super(x, y, width, height, max);
 	}
 	
 	@Override
 	public void render(Graphics g) {
 		float fillPart = fill / max;
+		if (fillPart > 1) fillPart = 1;
 		
 		// Render the unfilled part
 		g.setColor(new Color(255, 255, 255, 90));
