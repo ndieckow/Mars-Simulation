@@ -1,6 +1,8 @@
 package s4.informatik.mars.gui;
 
 import java.awt.Graphics;
+import java.util.ArrayList;
+import java.util.List;
 
 import s4.informatik.mars.util.Utils;
 
@@ -11,6 +13,7 @@ public abstract class Bar {
 	protected float max;
 	protected float fill;
 	protected float changeRate;
+	protected String name;
 	
 	private boolean changingMax = false;
 	private int temp_newMax = 0;
@@ -19,12 +22,15 @@ public abstract class Bar {
 	private int temp_maxTicks = 0;
 	private double temp_barMaxChangeValue;
 	
-	public Bar(int x, int y, int width, int height, float max) {
+	private List<Bar> coupledBars = new ArrayList<Bar>();
+	
+	public Bar(int x, int y, int width, int height, float max, String name) {
 		this.x = x;
 		this.y = y;
 		this.width = width;
 		this.height = height;
 		this.max = max;
+		this.name = name;
 		fill = 0;
 	}
 	
@@ -55,6 +61,10 @@ public abstract class Bar {
 		this.changeRate = changeRate;
 	}
 	
+	public String getName() {
+		return name;
+	}
+	
 	public void changeMaxSmoothly(int newMax, int ticks) {
 		if (newMax < max || changingMax)
 			return;
@@ -82,7 +92,7 @@ public abstract class Bar {
 		}
 		
 		fill += changeRate;
-		if (fill >= max && !changingMax) changeMaxSmoothly((int) max * 4, 60);		
+		if (fill >= max && !changingMax) changeMaxSmoothly((int) max * 4, 60);
 	}
 	
 	public abstract void render(Graphics g);

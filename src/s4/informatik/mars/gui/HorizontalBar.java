@@ -6,8 +6,8 @@ import java.awt.Graphics;
 
 public class HorizontalBar extends Bar {
 
-	public HorizontalBar(int x, int y, int width, int height, float max) {
-		super(x, y, width, height, max);
+	public HorizontalBar(int x, int y, int width, int height, float max, String name) {
+		super(x, y, width, height, max, name);
 	}
 	
 	@Override
@@ -23,8 +23,13 @@ public class HorizontalBar extends Bar {
 		g.setColor(new Color(255, 255, 255, 90));
 		g.fillRect(x + (int) (width * fillPart), y, (int) (width * (1.0f - fillPart)), height);
 		
+		// Werte rendern
 		g.setColor(Color.BLACK);
 		g.setFont(new Font("SansSerif", Font.BOLD, 15));
 		g.drawString((int) fill + " / " + (int) max, x + 5, y + 15);
+		
+		// Namen rendern
+		g.setColor(Color.WHITE);
+		g.drawString(name, x, y - 5);
 	}
 }

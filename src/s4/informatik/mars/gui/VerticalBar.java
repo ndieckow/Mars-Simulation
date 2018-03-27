@@ -6,8 +6,8 @@ import java.awt.Graphics;
 
 public class VerticalBar extends Bar {
 	
-	public VerticalBar(int x, int y, int width, int height, float max) {
-		super(x, y, width, height, max);
+	public VerticalBar(int x, int y, int width, int height, float max, String name) {
+		super(x, y, width, height, max, name);
 	}
 	
 	@Override
@@ -23,8 +23,12 @@ public class VerticalBar extends Bar {
 		g.setColor(Color.WHITE);
 		g.fillRect(x, y + (int) (height * (1.0f - fillPart)), width, (int) (height * fillPart));
 		
+		// Werte rendern
 		g.setColor(Color.BLACK);
 		g.setFont(new Font("SansSerif", Font.BOLD, 15));
 		g.drawString((int) fill + " / " + (int) max, x, y + height + 15);
+		
+		// Namen rendern
+		g.drawString(name, x, y + height + 40);
 	}
 }

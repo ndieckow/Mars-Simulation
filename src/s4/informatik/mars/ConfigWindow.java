@@ -67,7 +67,7 @@ public class ConfigWindow {
 	private void initialize() {
 		frame = new JFrame();
 		frame.setResizable(false);
-		frame.setBounds(100, 100, 620, 397);
+		frame.setBounds(100, 100, 710, 454);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[] {360, 0, 0};
@@ -79,8 +79,8 @@ public class ConfigWindow {
 		JPanel leftPanel = new JPanel();
 		leftPanel.setBorder(new EmptyBorder(10, 10, 0, 0));
 		GridBagConstraints gbc_leftPanel = new GridBagConstraints();
-		gbc_leftPanel.insets = new Insets(0, 0, 5, 5);
 		gbc_leftPanel.fill = GridBagConstraints.BOTH;
+		gbc_leftPanel.insets = new Insets(0, 0, 5, 5);
 		gbc_leftPanel.gridx = 0;
 		gbc_leftPanel.gridy = 0;
 		frame.getContentPane().add(leftPanel, gbc_leftPanel);
@@ -89,40 +89,64 @@ public class ConfigWindow {
 		JPanel resourcePanel = new JPanel();
 		leftPanel.add(resourcePanel);
 		GridBagLayout gbl_resourcePanel = new GridBagLayout();
-		gbl_resourcePanel.columnWidths = new int[] {112, 112, 56, 56, 0};
-		gbl_resourcePanel.rowHeights = new int[] {40, 40, 30, 40, 0};
-		gbl_resourcePanel.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		gbl_resourcePanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_resourcePanel.columnWidths = new int[] {112, 112, 0, 56, 0, 56, 0};
+		gbl_resourcePanel.rowHeights = new int[] {60, 0, 30, 30, 30, 0, 50, 30};
+		gbl_resourcePanel.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_resourcePanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		resourcePanel.setLayout(gbl_resourcePanel);
 		
 		JLabel lblRessourcen = new JLabel("Ressourcen");
 		lblRessourcen.setFont(new Font("Tahoma", Font.BOLD, 16));
 		lblRessourcen.setHorizontalAlignment(SwingConstants.CENTER);
 		GridBagConstraints gbc_lblRessourcen = new GridBagConstraints();
-		gbc_lblRessourcen.gridwidth = 4;
+		gbc_lblRessourcen.gridwidth = 6;
 		gbc_lblRessourcen.fill = GridBagConstraints.BOTH;
-		gbc_lblRessourcen.insets = new Insets(0, 0, 5, 5);
+		gbc_lblRessourcen.insets = new Insets(0, 0, 5, 0);
 		gbc_lblRessourcen.gridx = 0;
 		gbc_lblRessourcen.gridy = 0;
 		resourcePanel.add(lblRessourcen, gbc_lblRessourcen);
 		
 		JSlider energySmeltingSlider = new JSlider();
+		energySmeltingSlider.setToolTipText("Wieviel der Restenergie f\u00FCr die Verh\u00FCttung benutzt wird.");
 		JSlider energyMiningSlider = new JSlider();
+		energyMiningSlider.setToolTipText("Wieviel der Restenergie f\u00FCr den Bergbau genutzt wird.");
+		energyMiningSlider.setPaintTicks(true);
 		energyMiningSlider.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
 				energySmeltingSlider.setValue(100 - energyMiningSlider.getValue());
 			}
 		});
-		energyMiningSlider.setPaintTicks(true);
+		
+		JLabel lblBergbau = new JLabel("Bergbau");
+		lblBergbau.setHorizontalAlignment(SwingConstants.CENTER);
+		lblBergbau.setFont(new Font("Tahoma", Font.ITALIC, 11));
+		GridBagConstraints gbc_lblBergbau = new GridBagConstraints();
+		gbc_lblBergbau.fill = GridBagConstraints.HORIZONTAL;
+		gbc_lblBergbau.insets = new Insets(0, 0, 5, 5);
+		gbc_lblBergbau.gridx = 0;
+		gbc_lblBergbau.gridy = 1;
+		resourcePanel.add(lblBergbau, gbc_lblBergbau);
+		
+		JLabel lblBergbau_1 = new JLabel("Bergbau");
+		lblBergbau_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblBergbau_1.setFont(new Font("Tahoma", Font.ITALIC, 11));
+		GridBagConstraints gbc_lblBergbau_1 = new GridBagConstraints();
+		gbc_lblBergbau_1.fill = GridBagConstraints.HORIZONTAL;
+		gbc_lblBergbau_1.insets = new Insets(0, 0, 5, 5);
+		gbc_lblBergbau_1.gridx = 1;
+		gbc_lblBergbau_1.gridy = 1;
+		resourcePanel.add(lblBergbau_1, gbc_lblBergbau_1);
 		GridBagConstraints gbc_energyMiningSlider = new GridBagConstraints();
 		gbc_energyMiningSlider.fill = GridBagConstraints.BOTH;
 		gbc_energyMiningSlider.insets = new Insets(0, 0, 5, 5);
 		gbc_energyMiningSlider.gridx = 0;
-		gbc_energyMiningSlider.gridy = 1;
+		gbc_energyMiningSlider.gridy = 2;
 		resourcePanel.add(energyMiningSlider, gbc_energyMiningSlider);
 		
 		JSlider populationSmeltingSlider = new JSlider();
+		populationSmeltingSlider.setToolTipText("Wie sehr sich die Bev\u00F6lkerung auf die Verh\u00FCttung konzentriert.");
 		JSlider populationMiningSlider = new JSlider();
+		populationMiningSlider.setToolTipText("Wie sehr sich die Bev\u00F6lkerung auf den Bergbau konzentriert.");
 		populationMiningSlider.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
 				populationSmeltingSlider.setValue(100 - populationMiningSlider.getValue());
@@ -133,45 +157,63 @@ public class ConfigWindow {
 		gbc_populationMiningSlider.fill = GridBagConstraints.BOTH;
 		gbc_populationMiningSlider.insets = new Insets(0, 0, 5, 5);
 		gbc_populationMiningSlider.gridx = 1;
-		gbc_populationMiningSlider.gridy = 1;
+		gbc_populationMiningSlider.gridy = 2;
 		resourcePanel.add(populationMiningSlider, gbc_populationMiningSlider);
 		
+		JLabel lblBergbaumod = new JLabel("Bergbaumod.");
+		lblBergbaumod.setHorizontalAlignment(SwingConstants.RIGHT);
+		GridBagConstraints gbc_lblBergbaumod = new GridBagConstraints();
+		gbc_lblBergbaumod.fill = GridBagConstraints.HORIZONTAL;
+		gbc_lblBergbaumod.insets = new Insets(0, 0, 5, 5);
+		gbc_lblBergbaumod.gridx = 2;
+		gbc_lblBergbaumod.gridy = 2;
+		resourcePanel.add(lblBergbaumod, gbc_lblBergbaumod);
+		
 		miningModSpinner = new JSpinner();
-		miningModSpinner.setModel(new SpinnerNumberModel(new Float(0.5f), new Float(0), new Float(1), new Float(0.1f)));
+		miningModSpinner.setModel(new SpinnerNumberModel(new Float(0.5f), new Float(0), null, new Float(0.1f)));
 		GridBagConstraints gbc_miningModSpinner = new GridBagConstraints();
 		gbc_miningModSpinner.fill = GridBagConstraints.HORIZONTAL;
 		gbc_miningModSpinner.anchor = GridBagConstraints.WEST;
 		gbc_miningModSpinner.insets = new Insets(0, 0, 5, 5);
-		gbc_miningModSpinner.gridx = 2;
-		gbc_miningModSpinner.gridy = 1;
+		gbc_miningModSpinner.gridx = 3;
+		gbc_miningModSpinner.gridy = 2;
 		resourcePanel.add(miningModSpinner, gbc_miningModSpinner);
 		
 		JLabel lblEnergie = new JLabel("Energie");
+		lblEnergie.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblEnergie.setHorizontalAlignment(SwingConstants.CENTER);
 		GridBagConstraints gbc_lblEnergie = new GridBagConstraints();
 		gbc_lblEnergie.fill = GridBagConstraints.BOTH;
 		gbc_lblEnergie.insets = new Insets(0, 0, 5, 5);
 		gbc_lblEnergie.gridx = 0;
-		gbc_lblEnergie.gridy = 2;
+		gbc_lblEnergie.gridy = 3;
 		resourcePanel.add(lblEnergie, gbc_lblEnergie);
 		
 		JLabel lblBevlkerung = new JLabel("Bev\u00F6lkerung");
+		lblBevlkerung.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblBevlkerung.setHorizontalAlignment(SwingConstants.CENTER);
 		GridBagConstraints gbc_lblBevlkerung = new GridBagConstraints();
 		gbc_lblBevlkerung.fill = GridBagConstraints.BOTH;
 		gbc_lblBevlkerung.insets = new Insets(0, 0, 5, 5);
 		gbc_lblBevlkerung.gridx = 1;
-		gbc_lblBevlkerung.gridy = 2;
+		gbc_lblBevlkerung.gridy = 3;
 		resourcePanel.add(lblBevlkerung, gbc_lblBevlkerung);
 		
+		JLabel lblEffizienz = new JLabel("Effizienz");
+		GridBagConstraints gbc_lblEffizienz = new GridBagConstraints();
+		gbc_lblEffizienz.insets = new Insets(0, 0, 5, 5);
+		gbc_lblEffizienz.gridx = 4;
+		gbc_lblEffizienz.gridy = 3;
+		resourcePanel.add(lblEffizienz, gbc_lblEffizienz);
+		
 		efficiencySpinner = new JSpinner();
-		efficiencySpinner.setModel(new SpinnerNumberModel(new Float(0.9f), new Float(0), new Float(1), new Float(0.1f)));
-		efficiencySpinner.setToolTipText("");
+		efficiencySpinner.setModel(new SpinnerNumberModel(new Float(0.9f), new Float(0), null, new Float(0.1f)));
+		efficiencySpinner.setToolTipText("Mit welcher Erfolgsquote Aluminium aus Erz gewonnen wird.");
 		GridBagConstraints gbc_efficiencySpinner = new GridBagConstraints();
 		gbc_efficiencySpinner.insets = new Insets(0, 0, 5, 0);
 		gbc_efficiencySpinner.fill = GridBagConstraints.HORIZONTAL;
-		gbc_efficiencySpinner.gridx = 3;
-		gbc_efficiencySpinner.gridy = 2;
+		gbc_efficiencySpinner.gridx = 5;
+		gbc_efficiencySpinner.gridy = 3;
 		resourcePanel.add(efficiencySpinner, gbc_efficiencySpinner);
 		
 		energySmeltingSlider.addChangeListener(new ChangeListener() {
@@ -182,9 +224,9 @@ public class ConfigWindow {
 		energySmeltingSlider.setPaintTicks(true);
 		GridBagConstraints gbc_energySmeltingSlider = new GridBagConstraints();
 		gbc_energySmeltingSlider.fill = GridBagConstraints.BOTH;
-		gbc_energySmeltingSlider.insets = new Insets(0, 0, 0, 5);
+		gbc_energySmeltingSlider.insets = new Insets(0, 0, 5, 5);
 		gbc_energySmeltingSlider.gridx = 0;
-		gbc_energySmeltingSlider.gridy = 3;
+		gbc_energySmeltingSlider.gridy = 4;
 		resourcePanel.add(energySmeltingSlider, gbc_energySmeltingSlider);
 		
 		populationSmeltingSlider.addChangeListener(new ChangeListener() {
@@ -195,20 +237,49 @@ public class ConfigWindow {
 		populationSmeltingSlider.setPaintTicks(true);
 		GridBagConstraints gbc_populationSmeltingSlider = new GridBagConstraints();
 		gbc_populationSmeltingSlider.fill = GridBagConstraints.BOTH;
-		gbc_populationSmeltingSlider.insets = new Insets(0, 0, 0, 5);
+		gbc_populationSmeltingSlider.insets = new Insets(0, 0, 5, 5);
 		gbc_populationSmeltingSlider.gridx = 1;
-		gbc_populationSmeltingSlider.gridy = 3;
+		gbc_populationSmeltingSlider.gridy = 4;
 		resourcePanel.add(populationSmeltingSlider, gbc_populationSmeltingSlider);
 		
+		JLabel lblVerhttungsmod = new JLabel("Verh\u00FCttungsmod.");
+		lblVerhttungsmod.setHorizontalAlignment(SwingConstants.RIGHT);
+		GridBagConstraints gbc_lblVerhttungsmod = new GridBagConstraints();
+		gbc_lblVerhttungsmod.fill = GridBagConstraints.HORIZONTAL;
+		gbc_lblVerhttungsmod.insets = new Insets(0, 0, 5, 5);
+		gbc_lblVerhttungsmod.gridx = 2;
+		gbc_lblVerhttungsmod.gridy = 4;
+		resourcePanel.add(lblVerhttungsmod, gbc_lblVerhttungsmod);
+		
 		smeltingModSpinner = new JSpinner();
-		smeltingModSpinner.setModel(new SpinnerNumberModel(new Float(0.2f), new Float(0), new Float(1), new Float(0.1f)));
+		smeltingModSpinner.setModel(new SpinnerNumberModel(new Float(0.2f), new Float(0), null, new Float(0.1f)));
 		GridBagConstraints gbc_smeltingModSpinner = new GridBagConstraints();
 		gbc_smeltingModSpinner.anchor = GridBagConstraints.WEST;
 		gbc_smeltingModSpinner.fill = GridBagConstraints.HORIZONTAL;
-		gbc_smeltingModSpinner.insets = new Insets(0, 0, 0, 5);
-		gbc_smeltingModSpinner.gridx = 2;
-		gbc_smeltingModSpinner.gridy = 3;
+		gbc_smeltingModSpinner.insets = new Insets(0, 0, 5, 5);
+		gbc_smeltingModSpinner.gridx = 3;
+		gbc_smeltingModSpinner.gridy = 4;
 		resourcePanel.add(smeltingModSpinner, gbc_smeltingModSpinner);
+		
+		JLabel lblVerhttung = new JLabel("Verh\u00FCttung");
+		lblVerhttung.setHorizontalAlignment(SwingConstants.CENTER);
+		lblVerhttung.setFont(new Font("Tahoma", Font.ITALIC, 11));
+		GridBagConstraints gbc_lblVerhttung = new GridBagConstraints();
+		gbc_lblVerhttung.fill = GridBagConstraints.HORIZONTAL;
+		gbc_lblVerhttung.insets = new Insets(0, 0, 5, 5);
+		gbc_lblVerhttung.gridx = 0;
+		gbc_lblVerhttung.gridy = 5;
+		resourcePanel.add(lblVerhttung, gbc_lblVerhttung);
+		
+		JLabel lblVerhttung_1 = new JLabel("Verh\u00FCttung");
+		lblVerhttung_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblVerhttung_1.setFont(new Font("Tahoma", Font.ITALIC, 11));
+		GridBagConstraints gbc_lblVerhttung_1 = new GridBagConstraints();
+		gbc_lblVerhttung_1.fill = GridBagConstraints.HORIZONTAL;
+		gbc_lblVerhttung_1.insets = new Insets(0, 0, 5, 5);
+		gbc_lblVerhttung_1.gridx = 1;
+		gbc_lblVerhttung_1.gridy = 5;
+		resourcePanel.add(lblVerhttung_1, gbc_lblVerhttung_1);
 		
 		JPanel energyPanel = new JPanel();
 		leftPanel.add(energyPanel);
@@ -256,6 +327,7 @@ public class ConfigWindow {
 		energyPanel.add(lblEnergieProPerson, gbc_lblEnergieProPerson);
 		
 		JSpinner eppSpinner = new JSpinner();
+		eppSpinner.setToolTipText("Wieviel Energie von einer Person pro Zeiteinheit verbraucht wird.");
 		eppSpinner.setModel(new SpinnerNumberModel(new Float(1), new Float(0), null, new Float(1)));
 		GridBagConstraints gbc_eppSpinner = new GridBagConstraints();
 		gbc_eppSpinner.fill = GridBagConstraints.HORIZONTAL;
@@ -292,6 +364,7 @@ public class ConfigWindow {
 		energyPanel.add(lblEnergieProGenerator, gbc_lblEnergieProGenerator);
 		
 		JSpinner epgSpinner = new JSpinner();
+		epgSpinner.setToolTipText("Wieviel Energie ein Generator pro Zeiteinheit produziert.");
 		epgSpinner.setModel(new SpinnerNumberModel(new Float(2), new Float(0.1f), null, new Float(1)));
 		GridBagConstraints gbc_epgSpinner = new GridBagConstraints();
 		gbc_epgSpinner.fill = GridBagConstraints.HORIZONTAL;
@@ -369,7 +442,7 @@ public class ConfigWindow {
 		colonyPanel.add(lblHuser, gbc_lblHuser);
 		
 		JSpinner housesSpinner = new JSpinner();
-		housesSpinner.setModel(new SpinnerNumberModel(new Integer(1), new Integer(1), null, new Integer(1)));
+		housesSpinner.setModel(new SpinnerNumberModel(new Integer(3), new Integer(1), null, new Integer(1)));
 		GridBagConstraints gbc_housesSpinner = new GridBagConstraints();
 		gbc_housesSpinner.fill = GridBagConstraints.HORIZONTAL;
 		gbc_housesSpinner.insets = new Insets(0, 0, 5, 0);
@@ -387,6 +460,7 @@ public class ConfigWindow {
 		colonyPanel.add(lblHauskapazitt, gbc_lblHauskapazitt);
 		
 		JSpinner houseCapacitySpinner = new JSpinner();
+		houseCapacitySpinner.setToolTipText("Wieviele Personen in einem Haus leben k\u00F6nnen.");
 		houseCapacitySpinner.setModel(new SpinnerNumberModel(new Integer(10), new Integer(1), null, new Integer(1)));
 		GridBagConstraints gbc_houseCapacitySpinner = new GridBagConstraints();
 		gbc_houseCapacitySpinner.fill = GridBagConstraints.HORIZONTAL;
@@ -405,6 +479,7 @@ public class ConfigWindow {
 		colonyPanel.add(lblHauspreis, gbc_lblHauspreis);
 		
 		JSpinner housePriceSpinner = new JSpinner();
+		housePriceSpinner.setToolTipText("Preis f\u00FCr ein Haus in Aluminium.");
 		housePriceSpinner.setModel(new SpinnerNumberModel(new Float(100), new Float(1), null, new Float(1)));
 		GridBagConstraints gbc_housePriceSpinner = new GridBagConstraints();
 		gbc_housePriceSpinner.insets = new Insets(0, 0, 5, 0);
@@ -416,6 +491,7 @@ public class ConfigWindow {
 		JPanel buttonPanel = new JPanel();
 		FlowLayout flowLayout = (FlowLayout) buttonPanel.getLayout();
 		GridBagConstraints gbc_buttonPanel = new GridBagConstraints();
+		gbc_buttonPanel.ipady = 20;
 		gbc_buttonPanel.gridwidth = 2;
 		gbc_buttonPanel.insets = new Insets(0, 0, 0, 5);
 		gbc_buttonPanel.fill = GridBagConstraints.BOTH;
@@ -438,8 +514,6 @@ public class ConfigWindow {
 				Colony.MINING_PERCENTAGE = (float) energyMiningSlider.getValue() / 100f;
 				Colony.MINING_PERCENTAGE_POP = (float) populationMiningSlider.getValue() / 100f;
 				Colony.HOUSE_PRICE = (float) housePriceSpinner.getValue();
-				
-				System.out.println(Colony.MINING_PERCENTAGE + " " + Colony.MINING_PERCENTAGE_POP);
 				
 				Main.startSimulation((int) populationSpinner.getValue(), (int) housesSpinner.getValue(), (int) generatorSpinner.getValue());
 				frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));

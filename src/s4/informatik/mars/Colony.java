@@ -3,7 +3,7 @@ package s4.informatik.mars;
 public class Colony {
 
 	// constants
-	public static int CALC_INTERVAL = 120; // beim wievielten Tick jeweils sollte calculate() ausgeführt werden?
+	public static int CALC_INTERVAL = 300; // beim wievielten Tick jeweils sollte calculate() ausgeführt werden?
 
 	public static float POPULATION_GROWTH = 0.2f; // m
 	public static int AREA_CONSTANT = 10; // m // wieviele Personen pro Haus leben
@@ -43,6 +43,7 @@ public class Colony {
 	public Colony(int people, int houses, int generators) {
 		population = people;
 		this.houses = houses;
+		capacity = houses * people;
 		this.generators = generators;
 	}
 
@@ -85,8 +86,10 @@ public class Colony {
 		float oreUsage = smeltingFactor * SMELTING_MOD;
 		
 		ore += oreProd;
-		if (oreUsage <= ore) ore -= oreUsage;
-		else oreUsage = 0;
+		//System.out.println("Rest: " + energyRest + " Ore: " + ore + " Usage: " + oreUsage);
+		if (oreUsage > ore) oreUsage = ore;
+		ore -= oreUsage;
+		
 		
 		if (ore * EFFICIENCY >= 10 * HOUSE_PRICE) {
 			if (!modificatorSave) {
@@ -104,6 +107,8 @@ public class Colony {
 			}
 		}
 		
+		//System.out.println(MINING_PERCENTAGE + " " + MINING_PERCENTAGE_POP);
+		
 		aluminium += oreUsage * EFFICIENCY;
 		
 		// evtl. Häuserzahl erhöhen
@@ -112,13 +117,13 @@ public class Colony {
 			aluminium -= HOUSE_PRICE;
 		}
 		
-		System.out.println("=========================");
+		/*System.out.println("=========================");
 		System.out.println("Population: " + population);
 		System.out.println("Haeuser: " + houses);
 		System.out.println("Bevoelkerungskap.: " + capacity);
 		System.out.println("Energieproduktion: " + energyProduction);
 		System.out.println("Energienutzung: " + energyUsage);
 		System.out.println("Energierest: " + energyRest);
-		System.out.println("Aluminium: " + aluminium);
+		System.out.println("Aluminium: " + aluminium);*/
 	}
 }
