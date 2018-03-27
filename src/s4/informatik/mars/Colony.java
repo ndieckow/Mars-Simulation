@@ -19,6 +19,7 @@ public class Colony {
 
 	public int houses; // m
 	public int capacity; // wieviel Personen in der Kolonie leben können
+	private int hiddenCapacity;
 	public int OLD_capacity;
 	public int population; // m
 	public int OLD_population;
@@ -33,6 +34,11 @@ public class Colony {
 	public float OLD_ore;
 	public float aluminium;
 	public float OLD_aluminium;
+	
+	// Hilfsvariablen
+	private boolean modificatorSave;
+	private float miningPercentage_save;
+	private float miningPercentagePop_save;
 
 	public Colony(int people, int houses, int generators) {
 		population = people;
@@ -53,15 +59,22 @@ public class Colony {
 		OLD_ore = ore;
 		OLD_aluminium = aluminium;
 		
-		population += population * POPULATION_GROWTH;
 		generators += generators * GENERATOR_GROWTH;
 		capacity = houses * AREA_CONSTANT;
 		energyProduction = generators * ENERGY_PROD_CONSTANT;
 		energyUsage = population * EPP;
 		
-		/*if (energyProduction - capacity * energyUsagePerPerson < 0) {
-			population = (int) (energyProduction / energyUsagePerPerson);
-		}*/
+		if ((energyProduction - capacity * EPP) < 0) {
+			hiddenCapacity = (int) (energyProduction / EPP);
+		} else {
+			hiddenCapacity = capacity;
+		}
+		
+		population += population * POPULATION_GROWTH;
+		
+		if (population > hiddenCapacity) {
+			population = hiddenCapacity;
+		}
 
 		float energyRest = energyProduction - energyUsage;
 		float energyMining = energyRest * MINING_PERCENTAGE;
@@ -70,8 +83,28 @@ public class Colony {
 		float oreProd = miningFactor * MINING_MOD;
 		float smeltingFactor = energySmelting * (population * (1 - MINING_PERCENTAGE_POP));
 		float oreUsage = smeltingFactor * SMELTING_MOD;
-
-		aluminium = oreUsage * EFFICIENCY;
+		
+		ore += oreProd;
+		if (oreUsage <= ore) ore -= oreUsage;
+		else oreUsage = 0;
+		
+		if (ore * EFFICIENCY >= 10 * HOUSE_PRICE) {
+			if (!modificatorSave) {
+				modificatorSave = true;
+				miningPercentage_save = MINING_PERCENTAGE;
+				miningPercentagePop_save = MINING_PERCENTAGE_POP;
+				MINING_PERCENTAGE = 0;
+				MINING_PERCENTAGE_POP = 0;
+			}
+		} else {
+			if (modificatorSave) {
+				modificatorSave = false;
+				MINING_PERCENTAGE = miningPercentage_save;
+				MINING_PERCENTAGE_POP = miningPercentagePop_save;
+			}
+		}
+		
+		aluminium += oreUsage * EFFICIENCY;
 		
 		// evtl. Häuserzahl erhöhen
 		while (aluminium >= HOUSE_PRICE) {

@@ -5,6 +5,9 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import s4.informatik.mars.gui.Bar;
@@ -29,6 +32,10 @@ public class SimulationPanel extends JPanel {
 
 	public SimulationPanel(int people, int houses, int generators) {
 		setBackground(Color.BLACK);
+		
+		ImageIcon icon = new ImageIcon(SimulationPanel.class.getResource("mars.gif"));
+		JLabel label = new JLabel(icon);
+		add(label);
 
 		colony = new Colony(people, houses, generators);
 		// Horizontale Leisten

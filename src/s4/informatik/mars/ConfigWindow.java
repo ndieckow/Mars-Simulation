@@ -137,7 +137,7 @@ public class ConfigWindow {
 		resourcePanel.add(populationMiningSlider, gbc_populationMiningSlider);
 		
 		miningModSpinner = new JSpinner();
-		miningModSpinner.setModel(new SpinnerNumberModel(new Float(1), new Float(0), new Float(1), new Float(0.1f)));
+		miningModSpinner.setModel(new SpinnerNumberModel(new Float(0.5f), new Float(0), new Float(1), new Float(0.1f)));
 		GridBagConstraints gbc_miningModSpinner = new GridBagConstraints();
 		gbc_miningModSpinner.fill = GridBagConstraints.HORIZONTAL;
 		gbc_miningModSpinner.anchor = GridBagConstraints.WEST;
@@ -201,7 +201,7 @@ public class ConfigWindow {
 		resourcePanel.add(populationSmeltingSlider, gbc_populationSmeltingSlider);
 		
 		smeltingModSpinner = new JSpinner();
-		smeltingModSpinner.setModel(new SpinnerNumberModel(new Float(1), new Float(0), new Float(1), new Float(0.1f)));
+		smeltingModSpinner.setModel(new SpinnerNumberModel(new Float(0.2f), new Float(0), new Float(1), new Float(0.1f)));
 		GridBagConstraints gbc_smeltingModSpinner = new GridBagConstraints();
 		gbc_smeltingModSpinner.anchor = GridBagConstraints.WEST;
 		gbc_smeltingModSpinner.fill = GridBagConstraints.HORIZONTAL;
@@ -405,7 +405,7 @@ public class ConfigWindow {
 		colonyPanel.add(lblHauspreis, gbc_lblHauspreis);
 		
 		JSpinner housePriceSpinner = new JSpinner();
-		housePriceSpinner.setModel(new SpinnerNumberModel(new Float(20), new Float(1), null, new Float(1)));
+		housePriceSpinner.setModel(new SpinnerNumberModel(new Float(100), new Float(1), null, new Float(1)));
 		GridBagConstraints gbc_housePriceSpinner = new GridBagConstraints();
 		gbc_housePriceSpinner.insets = new Insets(0, 0, 5, 0);
 		gbc_housePriceSpinner.fill = GridBagConstraints.HORIZONTAL;
@@ -455,6 +455,7 @@ public class ConfigWindow {
 		});
 		buttonPanel.add(cancelBtn);
 		
+		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 	}
 }
